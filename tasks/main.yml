@@ -2,12 +2,16 @@
 
 - name: Install required packages
   apt:
-    name: '{{ item }}'
+    name: '{{ logrotate__base_packages }}'
     state: 'present'
     install_recommends: False
-  with_flattened:
-    - '{{ logrotate__base_packages }}'
-    - '{{ logrotate__packages }}'
+  when: logrotate__enabled|bool
+  
+- name: Install required packages
+  apt:
+    name: '{{ logrotate__packages }}'
+    state: 'present'
+    install_recommends: False
   when: logrotate__enabled|bool
 
 - name: Manage the log rotation period in cron
