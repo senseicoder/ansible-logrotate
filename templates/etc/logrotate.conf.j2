@@ -85,3 +85,18 @@
 {{ print_config(item) -}}
 {%   endif %}
 {% endfor %}
+
+# No packages own wtmp or btmp, they will be managed directly
+/var/log/wtmp {
+    missingok
+    monthly
+    create 0664 root utmp
+    rotate 1
+}
+
+/var/log/btmp {
+    missingok
+    monthly
+    create 0660 root utmp
+    rotate 1
+}
